@@ -1,249 +1,402 @@
-<!doctype html>
-<html lang="en" class="no-js">
-
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <!-- begin SEO -->
-    <title>Welcome to Xianzu's Homepage!</title>
-    <meta property="og:locale" content="en-US">
-    <meta property="og:site_name" content="吴显祖">
-    <meta property="og:title" content="Xianzu Wu 's Homepage">
-    <link rel="canonical" href="https://xianzuwu.github.io/">
-    <meta property="og:url" content="https://xianzuwu.github.io/">
-    <meta property="og:description" content="About Me">
-    <!-- end SEO -->
-
-
-    <!-- http://t.co/dKP3o1e -->
-    <meta name="HandheldFriendly" content="True">
-    <meta name="MobileOptimized" content="320">
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xianzu Wu - Personal Homepage</title>
+    
+    <!-- 引入 Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- 引入 React 和 ReactDOM -->
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    
+    <!-- 引入 Babel 用于在浏览器中编译 JSX -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
 
-    <script>
-        document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
-    </script>
-
-    <!-- For all browsers -->
-    <link rel="stylesheet" href="https://xianzuwu.github.io/css/main.css">
-    <meta http-equiv="cleartype" content="on">
-
-
-    <!-- start custom head snippets -->
-
-    <link rel="icon" href="https://xianzuwu.github.io/images/icon.png" sizes="192×192">
-
-
-    <script type="text/x-mathjax-config">
-                MathJax.Hub.Config({ tex2jax: { inlineMath: [ ['$','$'], ["\\(","\\)"] ], processEscapes: true } }); 
-        </script>
-    <script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.4/latest.js?config=TeX-MML-AM_CHTML' async></script>
-    <!-- end custom head snippets -->
-
-
-
-
-
-
-
-
-    <!--wowchemy -->
-        <link rel=stylesheet href=/css/wowchemy.3a3c1ee59d97b4e6d76f2cb0f1d0e41f.css>
-        <script type=application/ld+json>
-            {"@context":"https://schema.org","@type":"WebSite","potentialAction":{"@type":"SearchAction","target":"https://www.yhzhai.com?q={search_term_string}","query-input":"required name=search_term_string"},"url":"https://www.yhzhai.com"}
-        </script>
+    <!-- 注入优雅的字体 -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400&family=Inter:wght@300;400;500&display=swap');
+        
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        .font-sans {
+            font-family: 'Inter', sans-serif;
+        }
+    </style>
 </head>
+<body class="bg-[#FCFCFA] text-zinc-900 font-sans antialiased selection:bg-zinc-200 selection:text-black">
+    <div id="root"></div>
 
-<body>
-    <!--[if lt IE 9]><div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</div><![endif]-->
-    <div class="masthead">
-        <div class="masthead__inner-wrap">
-            <div class="masthead__menu">
-                <nav id="site-nav" class="greedy-nav">
-                    <ul class="visible-links">
-                        <li class="masthead__menu-item masthead__menu-item--lg">
-                            <a href="https://xianzuwu.github.io">Xianzu Wu ( 吴显祖 )</a>
-                        </li>
-                        <li class="masthead__menu-item">
-                            <a href="https://xianzuwu.github.io">About Me</a>
-                        </li>
-                        <li class="masthead__menu-item">
-                            <a href="https://xianzuwu.github.io/CV/Publications.html">Publications</a>
-                        </li>
-                        <li class="masthead__menu-item">
-                            <a href="https://xianzuwu.github.io/CV/Services.html">Services</a>
-                        </li>
-                        <li class="masthead__menu-item">
-                            <a href="https://xianzuwu.github.io/CV/CV.pdf">CV</a>
-                        </li>
+    <script type="text/babel">
+        const { useEffect, useState } = React;
 
-                    </ul>
+        // --- 数据部分 ---
+        const DATA = {
+          name: "Xianzu Wu",
+          subtitle: [
+            "RA @ The Chinese University of Hong Kong, Shenzhen",
+            "Supervised by Prof. Xiaoguang Han"
+          ],
+          contact: {
+            email: "xianzuwu@gmail.com",
+            phone: "+86 18971223095",
+            scholar: "https://scholar.google.com/citations?user=HZ_XSuUAAAAJ&hl=zh-CN",
+            github: "https://github.com/xianzuwu",
+            orcid: "0009-0007-0747-8209"
+          },
+          about: "My research interests lie at the intersection of Computer Vision and Multi-modal Foundation Models, with a particular focus on 3D reconstruction, generation, and world models. I am currently based in Shenzhen, working as a Research Assistant at the Department of Computer and Information Engineering, The Chinese University of Hong Kong, Shenzhen.",
+          news: [
+            {
+              date: "Feb 2026",
+              content: <>Joined <a href="https://gaplab.cuhk.edu.cn/" target="_blank" rel="noopener noreferrer" className="border-b border-zinc-300 hover:border-zinc-900 transition-colors pb-0.5">GAP Lab</a> as a Research Assistant.</>
+            },
+            {
+              date: "Dec 2025",
+              content: "Niagara accepted by TCSVT."
+            },
+            {
+              date: "Mar 2024",
+              content: "FSC accepted by CVPR."
+            }
+          ],
+          projects: [
+            {
+              name: "Niagara",
+              link: "https://github.com/xianzuwu/niagara",
+              desc: "Normal-Integrated Geometric Affine Field for Scene Reconstruction from a Single View"
+            },
+            {
+              name: "4DLangVGGT",
+              link: "https://github.com/xianzuwu/4dlangvggt",
+              desc: "4D Language Visual Geometry Grounded Transformer"
+            }
+          ],
+          experience: [
+            {
+              year: "Feb 2026 — Present",
+              role: "Research Assistant",
+              institution: "The Chinese University of Hong Kong, Shenzhen",
+              logo: "./images/CUSZ_ICON.png",
+              advisors: [{ name: "Asst. Prof. Xiaoguang Han", link: "https://gaplab.cuhk.edu.cn/people/hanxiaoguang/" }],
+              location: "Shenzhen, China"
+            },
+            {
+              year: "Jun 2024 — Mar 2025",
+              role: "Research Intern",
+              institution: "Westlake University",
+              logo: "./images/WU_ICON.png", 
+              advisors: [
+                { name: "Asst. Prof. Huan Wang", link: "https://huanwang.tech/" },
+                { name: "Prof. Jun Liu", link: "https://wp.lancs.ac.uk/vl/" }
+              ],
+              location: "Hangzhou, China"
+            },
+            {
+              year: "Jan 2023 — Jun 2024",
+              role: "Remote Research Intern",
+              institution: "The State University of New York at Buffalo",
+              logo: "./images/UB_ICON.png", 
+              advisors: [{ name: "Prof. Junsong Yuan", link: "https://cse.buffalo.edu/~jsyuan/" }],
+              location: "NY, USA"
+            }
+          ],
+          publications: [
+            {
+              year: "2025",
+              title: "4DLangVGGT: 4D Language Visual Geometry Grounded Transformer",
+              authors: "Xianfeng Wu, Yajing Bai, Minghan Li, Xianzu Wu, Xueqi Zhao, Zhongyuan Lai, Wenyu Liu, Xinggang Wang",
+              venue: "",
+              links: [
+                { name: "Project Page", url: "https://hustvl.github.io/4DLangVGGT/" },
+                { name: "Paper", url: "https://arxiv.org/pdf/2512.05060" },
+                { name: "Code", url: "https://github.com/hustvl/4DLangVGGT/" }
+              ]
+            },
+            {
+              year: "2025",
+              title: "3D Dynamics-Aware Manipulation: Endowing Manipulation Policies with 3D Foresight",
+              authors: "Yuxin He, Ruihao Zhang, Xianzu Wu, Zhiyuan Zhang, Qiang Nie",
+              venue: "IEEE International Conference on Robotics & Automation (ICRA)",
+              links: [
+                { name: "Project Page", url: "https://arxiv.org/pdf/2502.10028" },
+                { name: "Paper", url: "https://arxiv.org/pdf/2502.10028" },
+                { name: "Code", url: "https://github.com/Stardust-hyx/3D-Foresight" }
+              ]
+            },
+            {
+              year: "2025",
+              title: "Niagara: Normal-Integrated Geometric Affine Field for Scene Reconstruction from a Single View",
+              authors: "Xianzu Wu, Zhenxin Ai, Harry Yang, Sernam Lim, Jun Liu, Huan Wang*",
+              venue: "IEEE Transactions on Circuits and Systems for Video Technology (TCSVT)",
+              links: [
+                { name: "Project Page", url: "https://ai-kunkun.github.io/Niagara_page/" },
+                { name: "Paper", url: "https://ieeexplore.ieee.org/document/11299106" },
+                { name: "Code", url: "https://github.com/xianzuwu/Niagara" }
+              ]
+            },
+            {
+              year: "2024",
+              title: "FSC: Few-point Shape Completion",
+              authors: "Xianzu Wu, Xianfeng Wu, Tianyu Luan, Yajing Bai, Zhongyuan Lai, and Junsong Yuan",
+              venue: "Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR)",
+              links: [
+                { name: "Project Page", url: "https://openaccess.thecvf.com/content/CVPR2024/papers/Wu_FSC_Few-point_Shape_Completion_CVPR_2024_paper.pdf" },
+                { name: "Paper", url: "https://openaccess.thecvf.com/content/CVPR2024/papers/Wu_FSC_Few-point_Shape_Completion_CVPR_2024_paper.pdf" },
+                { name: "Code", url: "https://github.com/xianzuwu/FSC" }
+              ]
+            }
+          ]
+        };
 
-                    <ul class="hidden-links hidden"></ul>
-                </nav>
+        // --- 图标组件 ---
+        const BuildingIcon = ({ className }) => (
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
+            <rect x="4" y="2" width="16" height="20" rx="2" ry="2"></rect>
+            <path d="M9 22v-4h6v4"></path>
+            <path d="M8 6h.01"></path>
+            <path d="M16 6h.01"></path>
+            <path d="M12 6h.01"></path>
+            <path d="M12 10h.01"></path>
+            <path d="M12 14h.01"></path>
+            <path d="M16 10h.01"></path>
+            <path d="M16 14h.01"></path>
+            <path d="M8 10h.01"></path>
+            <path d="M8 14h.01"></path>
+          </svg>
+        );
+
+        const ArrowUpRightIcon = ({ className }) => (
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" className={className}>
+            <line x1="7" y1="17" x2="17" y2="7"></line>
+            <polyline points="7 7 17 7 17 17"></polyline>
+          </svg>
+        );
+
+        // --- 组件部分 ---
+        const FadeInDiv = ({ children, delay = 0, className = "" }) => {
+          const [isVisible, setIsVisible] = useState(false);
+
+          useEffect(() => {
+            const timer = setTimeout(() => setIsVisible(true), delay);
+            return () => clearTimeout(timer);
+          }, [delay]);
+
+          return (
+            <div
+              className={`transition-all duration-1000 ease-out ${
+                isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+              } ${className}`}
+            >
+              {children}
             </div>
-        </div>
-    </div>
-    <div id="main" role="main">
-        <!-- 左侧个人信息栏 -->
-        <div class="sidebar sticky">
-            <div class="author__avatar">
-                <img src="https://xianzuwu.github.io/images/XianzuWu.jpg" class="author__avatar" alt="Xianzu Wu">
-            </div>
-            <div class="author__content">
-                <h3 class="author__name;align-center:center;">Xianzu Wu</h3>
-                <p class="author__bio;align-center:center;">
-                    RA@HKUST
-                </p>
-            </div>
-            <div class="author__urls-wrapper">
-                <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.css">
+          );
+        };
 
-                <ul class="author__urls social-icons">
-                    <li>
-                        <i class="fa fa-fw fa-map-marker" aria-hidden="true"></i>
-                        WuHan,HuBei
-                    </li>
-                    <li>
-                        <a href="mailto:xianzuwu@gmail.com">
-                            <i class="fas fa-fw fa fa-envelope" aria-hidden="true"></i>
-                            Email
-                        </a>
-                    </li>
-                    <li>
-                        <a href="https://github.com/xianzuwu">
-                            <i class="fab fa-fw fa fa-github" aria-hidden="true"></i>
-                            Github
-                        </a>
-                    </li>
-                </ul>
-            </div>
-        </div>
+        const SectionHeader = ({ title }) => (
+          <h2 className="text-xs uppercase tracking-[0.2em] text-zinc-400 mb-12 font-sans">
+            {title}
+          </h2>
+        );
 
-        <!-- 主页面内容 -->
-        <article class="page" itemscope itemtype="http://schema.org/CreativeWork">
-            <meta itemprop="headline" content="Xianzu Wu's Homepage">
-            <meta itemprop="description" content="About Me">
-            <div class="page__inner-wrap">
-                <header>
-                    <h1 class="page__title" itemprop="headline">Welcome to Xianzu’s Homepage!!</h1>
+        const HighlightAuthor = ({ authors }) => {
+          const parts = authors.split('Xianzu Wu');
+          return (
+            <span className="text-zinc-500 text-sm leading-relaxed">
+              {parts.map((part, i) => (
+                <React.Fragment key={i}>
+                  {part}
+                  {i !== parts.length - 1 && <strong className="text-zinc-900 font-medium">Xianzu Wu</strong>}
+                </React.Fragment>
+              ))}
+            </span>
+          );
+        };
+
+        function App() {
+          return (
+            <div className="min-h-screen">
+              <div className="max-w-4xl mx-auto px-6 md:px-12 py-24 md:py-40">
+                
+                {/* Header / Hero Section */}
+                <header className="mb-32 md:mb-48">
+                  <FadeInDiv delay={50}>
+                    {/* 直接引用您保留的 images 文件夹中的照片 */}
+                    <img 
+                      src="./images/XianzuWu.jpg" 
+                      alt="Xianzu Wu" 
+                      className="w-24 h-24 md:w-32 md:h-32 object-cover rounded-full mb-8 bg-zinc-200 border border-zinc-200 shadow-sm"
+                      onError={(e) => { e.target.src = 'https://via.placeholder.com/150/e4e4e7/a1a1aa?text=Photo' }}
+                    />
+                  </FadeInDiv>
+                  
+                  <FadeInDiv delay={100}>
+                    <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl tracking-tight mb-6">
+                      Xianzu Wu
+                    </h1>
+                  </FadeInDiv>
+                  
+                  <FadeInDiv delay={200}>
+                    <div className="text-zinc-600 font-serif text-lg md:text-xl tracking-wide mb-8 space-y-1">
+                      <p>{DATA.subtitle[0]}</p>
+                      <p className="italic text-zinc-500">{DATA.subtitle[1]}</p>
+                    </div>
+                  </FadeInDiv>
+
+                  <FadeInDiv delay={300}>
+                    <p className="text-base md:text-lg text-zinc-500 font-light max-w-2xl leading-relaxed mb-12">
+                      {DATA.about}
+                    </p>
+                  </FadeInDiv>
+
+                  <FadeInDiv delay={500}>
+                    <div className="flex flex-wrap gap-8 text-sm uppercase tracking-widest text-zinc-500 font-medium">
+                      <a href={`mailto:${DATA.contact.email}`} className="hover:text-zinc-900 transition-colors pb-1 border-b border-transparent hover:border-zinc-900">Email</a>
+                      <a href={DATA.contact.scholar} target="_blank" rel="noopener noreferrer" className="hover:text-zinc-900 transition-colors pb-1 border-b border-transparent hover:border-zinc-900">Scholar</a>
+                      <a href={DATA.contact.github} target="_blank" rel="noopener noreferrer" className="hover:text-zinc-900 transition-colors pb-1 border-b border-transparent hover:border-zinc-900">Github</a>
+                    </div>
+                  </FadeInDiv>
                 </header>
-                <section class="page__content" itemprop="text">
-                    <p>
-                        I am Xianzu Wu, I was an intern at ENCODE Lab@Westlake University under the supervision of <a href="https://huanwang.tech">Prof. Huan Wang </a>.
-                    </p>
-                    <p>
-                        My current research interests are in <strong>3D Vision</strong>, <strong>Embodied AI</strong> and <strong>Multi-modal Foundation model</strong>
-                        , focusing on sparse representations reconstruction and generation, as well as physics-constrained reconstruction and generation
-                        , and I am eager to explore the AI's ability to "imagine" and "dream".
-                    </p>
-                    <p>
-                        If you are interested in my research, please feel free to <a
-                            href="mailto:xianzuwu@gmail.com">email</a> me.
-                    </p>
-                    
-                    <h2 class=mb-0 style="font-size:40px">What's news</h2>
-                            <li>
-                                📢<strong>03.2025:</strong> Release Niagara, The first effective single-view 3D outdoor scene reconstruction!
-                                 Here is the github repo <a href="https://github.com/xianzuwu/Niagara">Niagara</a>(<a href="https://mp.weixin.qq.com/s/W9nvpQwYrLRO_NipOMNdcA">量子位</a>).
-                            </li>
 
-                            <li>
-                                📢<strong>03.2025:</strong> Release <a href="https://arxiv.org/abs/2503.08619">LightGen</a>(<a href="https://mp.weixin.qq.com/s/CNZoIxRbOO37rbEgwqLNQg">机器之心</a>,<a href="https://mp.weixin.qq.com/s/9dyep_QSeJSZh61jCEzjkg">量子位</a>), an efficient text2img generation pretrain pipeline based on MAR!
-                            </li>
-                    
-                            <li>
-                                📢<strong>03.2024:</strong> Congratulations to Xianzu's first-authored paper <a href="https://cvpr2023.thecvf.com/virtual/2024/poster/29180">FSC</a> accepted to CVPR2024!
-                            </li>
-                            
-                     
-                    <div class=home-section-bg></div>
-                    <div class=container>
-                            <div class=row>
-                                <div class="section-heading col-12 col-lg-4 mb-3 mb-lg-0 d-flex flex-column align-items-center align-items-lg-start">
-                                    <h1 class=mb-0 style="font-size:40px">Experience</h1>
-
-                                </div>
-                                <div class="col-12 col-lg-8">
-                     
-                                    <div class="row experience">
-                                        <div class="col-auto text-center flex-column d-none d-sm-flex">
-                                            <div class="row h-50">
-                                                <div class=col>&nbsp;</div>
-                                                <div class=col>&nbsp;</div>
-                                            </div>
-                                            <div class=m-2>
-                                                <span class="badge badge-pill border">&nbsp;</span>
-                                            </div>
-                                            <div class="row h-50">
-                                                <div class="col border-right">&nbsp;</div>
-                                                <div class=col>&nbsp;</div>
-                                            </div>
-                                        </div>
-                                        <div class="col py-2">
-                                            <div class=card>
-                                                <div class=card-body>
-                                                    <div class="section-subheading card-title exp-title text-muted my-0">Research Intern</div>
-                                                    <div class="section-subheading card-title exp-company text-muted my-0">
-                                                        <a href=https://engineering.buffalo.edu/computer-science-engineering.html target=_blank rel=noopener>Computer Science and Engineering Department,University at Buffalo</a>
-                                                    </div>
-                                                    <div class="text-muted exp-meta">
-                                                        Jan 2023 – Jul 2024
-        <span class=middot-divider></span>
-                                                        <span>Buffalo, NY, USA</span>
-                                                    </div>
-                                                    <div class=card-text>
-                                                        Research focuses on Point Cloud Completion. Advisors: <a href="https://cse.buffalo.edu/~jsyuan/" target=_blank rel=noopener>Junsong Yuan</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row experience">
-                                        <div class="col-auto text-center flex-column d-none d-sm-flex">
-                                            <div class="row h-50">
-                                                <div class="col border-right">&nbsp;</div>
-                                                <div class=col>&nbsp;</div>
-                                            </div>
-                                            <div class=m-2>
-                                                <span class="badge badge-pill border">&nbsp;</span>
-                                            </div>
-                                            <div class="row h-50">
-                                                <div class=col>&nbsp;</div>
-                                                <div class=col>&nbsp;</div>
-                                            </div>
-                                        </div>
-                                        <div class="col py-2">
-                                            <div class=card>
-                                                <div class=card-body>
-                                                    <div class="section-subheading card-title exp-title text-muted my-0">Research Intern</div>
-                                                    <div class="section-subheading card-title exp-company text-muted my-0">
-                                                        <a href=http://cse.whu.edu.cn/index.htm target=_blank rel=noopener>School of Cyber Science and Engineering, Wuhan University</a>
-                                                    </div>
-                                                    <div class="text-muted exp-meta">
-                                                        Jul 2022 –
-        Dec 2022
-        <span class=middot-divider></span>
-                                                        <span>WuHan, HuBei, China</span>
-                                                    </div>
-                                                    <div class=card-text>
-                                                        Research focuses on Privacy Computing (Data security, AI security), Federated Learning and Reinforcement learning. Advisors: <a href="https://scholar.google.com/citations?user=vp4cbJ4AAAAJ" target=_blank rel=noopener>Libing Wu</a
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
+                <div className="space-y-32 md:space-y-48">
+                  
+                  {/* Latest News Section */}
+                  <section>
+                    <FadeInDiv delay={100}>
+                      <SectionHeader title="Latest News" />
+                      <div className="border-t border-zinc-200 pt-8">
+                        {DATA.news.map((item, index) => (
+                          <div key={index} className="flex flex-col md:flex-row mb-4 last:mb-0">
+                            <div className="md:w-1/4 mb-1 md:mb-0">
+                              <span className="text-sm text-zinc-500 font-medium">{item.date}</span>
                             </div>
-                        </div>
-                </section>
-                <footer class="page__meta"></footer>
+                            <div className="md:w-3/4">
+                              <p className="text-zinc-800">{item.content}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </FadeInDiv>
+                  </section>
+
+                  {/* Experience Section */}
+                  <section>
+                    <FadeInDiv delay={100}>
+                      <SectionHeader title="Research Experience" />
+                      <div className="group">
+                        {DATA.experience.map((exp, index) => (
+                          <div key={index} className="flex flex-col md:flex-row py-8 border-t border-zinc-200 transition-opacity hover:!opacity-100 group-hover:opacity-50">
+                            <div className="md:w-1/4 mb-4 md:mb-0">
+                              <span className="text-sm text-zinc-500 font-medium">{exp.year}</span>
+                            </div>
+                            
+                            <div className="md:w-3/4 flex items-start">
+                              <div className="w-10 h-10 md:w-12 md:h-12 shrink-0 mr-5 bg-zinc-100 border border-zinc-200 rounded flex items-center justify-center overflow-hidden">
+                                {exp.logo ? (
+                                  <img src={exp.logo} alt={`${exp.institution} logo`} className="w-full h-full object-contain p-1" />
+                                ) : (
+                                  <BuildingIcon className="w-5 h-5 text-zinc-300" />
+                                )}
+                              </div>
+                              
+                              <div className="flex-1">
+                                <h3 className="font-serif text-2xl mb-3">{exp.role}</h3>
+                                <div className="flex items-center text-zinc-900 font-medium mb-2">
+                                  {exp.institution}
+                                </div>
+                                <p className="text-zinc-500 text-sm mb-1">
+                                  Advisor: {exp.advisors.map((adv, idx) => (
+                                    <React.Fragment key={idx}>
+                                      <a href={adv.link} target={adv.link !== "#" ? "_blank" : "_self"} rel="noopener noreferrer" className="border-b border-zinc-300 hover:border-zinc-900 hover:text-zinc-900 transition-colors pb-0.5">
+                                        {adv.name}
+                                      </a>
+                                      {idx < exp.advisors.length - 1 && " & "}
+                                    </React.Fragment>
+                                  ))}
+                                </p>
+                                <p className="text-zinc-400 text-sm italic">{exp.location}</p>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </FadeInDiv>
+                  </section>
+
+                  {/* Selected Publications Section */}
+                  <section>
+                    <FadeInDiv delay={100}>
+                      <SectionHeader title="Selected Publications" />
+                      <div className="group">
+                        {DATA.publications.map((pub, index) => (
+                          <div key={index} className="flex flex-col md:flex-row py-8 border-t border-zinc-200 transition-opacity hover:!opacity-100 group-hover:opacity-50">
+                            <div className="md:w-1/4 mb-4 md:mb-0">
+                              <span className="text-sm text-zinc-500 font-medium">{pub.year}</span>
+                            </div>
+                            <div className="md:w-3/4">
+                              <h3 className="font-serif text-xl leading-snug mb-3 text-zinc-900">
+                                {pub.title}
+                              </h3>
+                              <div className="mb-2">
+                                <HighlightAuthor authors={pub.authors} />
+                              </div>
+                              {pub.venue && (
+                                <p className="text-zinc-400 text-sm italic mb-2">
+                                  {pub.venue}
+                                </p>
+                              )}
+                              {pub.links && (
+                                <div className="flex flex-wrap gap-5 mt-3">
+                                  {pub.links.map((link, i) => (
+                                    <a key={i} href={link.url} target="_blank" rel="noopener noreferrer" className="text-xs uppercase tracking-widest text-zinc-400 hover:text-zinc-900 transition-colors pb-0.5 border-b border-zinc-200 hover:border-zinc-900">
+                                      {link.name}
+                                    </a>
+                                  ))}
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </FadeInDiv>
+                  </section>
+
+                  {/* Open Source Projects Section */}
+                  <section>
+                    <FadeInDiv delay={100}>
+                      <SectionHeader title="Open Source Projects" />
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 border-t border-zinc-200 pt-8">
+                        {DATA.projects.map((proj, index) => (
+                          <a href={proj.link} target="_blank" rel="noopener noreferrer" key={index} className="group block p-6 border border-zinc-100 hover:border-zinc-300 transition-colors bg-white shadow-sm">
+                            <h3 className="font-serif text-xl mb-3 flex items-center text-zinc-900 group-hover:text-black transition-colors">
+                              {proj.name} 
+                              <ArrowUpRightIcon className="w-4 h-4 ml-2 text-zinc-300 group-hover:text-zinc-900 transition-colors" />
+                            </h3>
+                            <p className="text-zinc-500 text-sm leading-relaxed">{proj.desc}</p>
+                          </a>
+                        ))}
+                      </div>
+                    </FadeInDiv>
+                  </section>
+                </div>
+
+                {/* Footer */}
+                <footer className="mt-32 md:mt-48 pt-12 pb-16 border-t border-zinc-200 flex flex-col md:flex-row justify-between items-start md:items-center text-xs text-zinc-400 uppercase tracking-widest">
+                  <p>© {new Date().getFullYear()} Xianzu Wu</p>
+                  <div className="mt-4 md:mt-0 flex gap-6">
+                    <a href={`mailto:${DATA.contact.email}`} className="hover:text-zinc-900 transition-colors">Contact</a>
+                  </div>
+                </footer>
+
+              </div>
             </div>
-        </article>
-    </div>
-    <div class=page-body>
-            <span class="js-widget-page d-none"></span>
+          );
+        }
 
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
 </body>
-
 </html>
